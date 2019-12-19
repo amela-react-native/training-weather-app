@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unused-state */
 /* eslint-disable react/state-in-constructor */
 /* eslint-disable react/destructuring-assignment */
 import React, {Component} from 'react';
@@ -32,7 +33,6 @@ export default class Search extends Component {
   };
 
   render() {
-    // console.log(this.state.cities);
     return (
       <View style={styles.container}>
         <TextInput
