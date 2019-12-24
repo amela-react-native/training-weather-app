@@ -5,7 +5,9 @@
 /* eslint-disable react/no-unused-state */
 /* eslint-disable react/state-in-constructor */
 import React, {Component} from 'react';
-import {Text, View, StyleSheet, TouchableOpacity} from 'react-native';
+import {Text, View, StyleSheet} from 'react-native';
+
+const date = '2019-03-28';
 
 export default class Home extends Component {
   state = {
@@ -13,7 +15,8 @@ export default class Home extends Component {
     humidity: 'loading',
     temp: 'loading',
     descrip: 'loading',
-    weather: 'loading'
+    weather: 'loading',
+    list: null
   };
 
   getWeatherCity() {
@@ -33,11 +36,26 @@ export default class Home extends Component {
       });
   }
 
+  getWeatherCityHourly() {
+    const city1 = this.props.navigation.getParam('citySearch', 'Hanoi');
+    fetch(
+      `https://samples.openweathermap.org/data/2.5/forecast/hourly?q=${city1}&appid=b6907d289e10d714a6e88b30761fae22`
+    )
+      .then(data => data.json())
+      .then(data2 => {
+        this.setState({
+          list: data2.list.filter(item => item.dt_txt.includes(date))
+        });
+      });
+  }
+
   componentDidMount() {
     this.getWeatherCity();
+    this.getWeatherCityHourly();
   }
 
   render() {
+    console.log(this.state.list);
     if (this.props.navigation.getParam('citySearch')) {
       this.getWeatherCity();
     }
