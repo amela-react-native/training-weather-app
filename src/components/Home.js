@@ -11,13 +11,33 @@ import {
   ScrollView,
   Text,
   ImageBackground,
-  Dimensions
+  Dimensions,
+  FlatList
 } from 'react-native';
-import Icon from 'react-native-ionicons';
 import moment from 'moment';
+import HorizontalFlatListItem from './flatlist-horizontal';
+import Icon from 'react-native-ionicons';
 
 const {width} = Dimensions.get('window');
 const date = '2019-03-28';
+const horizontalStatus = {
+  rainy: {
+    ios: 'ios-rainy',
+    android: 'md-rainy'
+  }
+};
+const horizontalFlatListData = [
+  {
+    hour: '1 AM',
+    status: horizontalStatus.rainy,
+    degrees: 57
+  },
+  {
+    hour: '2 AM',
+    status: horizontalStatus.rainy,
+    degrees: 57
+  }
+];
 
 export default class Home extends Component {
   state = {
@@ -68,7 +88,7 @@ export default class Home extends Component {
   render() {
     console.log('date: ', moment().format('dddd'));
     console.log('2010-10-20 04:30:00'.slice(11, 13));
-    //console.log(this.state.list);
+    // console.log(this.state.list);
     if (this.props.navigation.getParam('citySearch')) {
       this.getWeatherCity();
     }
@@ -99,10 +119,58 @@ export default class Home extends Component {
                   </Text>
                 </View>
               </View>
-              <ScrollView
+              <FlatList
                 style={styles.scrollViewHorizontal}
-                showsHorizontalScrollIndicator={false}
-                horizontal></ScrollView>
+                horizontal
+                data={horizontalFlatListData}
+                renderItem={({item, index}) => {
+                  return (
+                    <HorizontalFlatListItem
+                      item={item}
+                      index={index}
+                      parentFlatList={this}
+                    />
+                  );
+                }}
+                keyExtractor={item => item.hour}
+              />
+              <View style={styles.viewDayOfWeek}>
+                <View style={styles.viewDay}>
+                  <View style={[styles.viewBetWeen, {paddingLeft: 10}]}>
+                    <Text style={styles.textBetWeen}>Wednesday</Text>
+                  </View>
+                  <View style={styles.viewBetWeen}>
+                    <Icon
+                      name="ios-sunny"
+                      size={25}
+                      style={[
+                        styles.textScrollViewHorizontal,
+                        {paddingLeft: 10}
+                      ]}
+                    />
+                  </View>
+                  <View style={[styles.viewBetWeen, {paddingRight: 10}]}>
+                    <Text style={styles.textBetWeen}>20 28</Text>
+                  </View>
+                </View>
+              </View>
+              <View style={styles.infoDay} />
+              <View style={styles.detailsDay}>
+                <View style={styles.rowDetails}>
+                  <View style={styles.alignLeftText}>
+                    <Text style={styles.textTitle}>detail</Text>
+                    <Text style={styles.value}>20</Text>
+                  </View>
+                  <View style={styles.alignLeftText}>
+                    <Text style={styles.textTitle}>detail</Text>
+                    <Text style={styles.value}>20</Text>
+                  </View>
+                </View>
+                <View style={styles.rowDetails} />
+                <View style={styles.rowDetails} />
+                <View style={styles.rowDetails} />
+                <View style={styles.rowDetails} />
+              </View>
             </View>
           </ScrollView>
         </ImageBackground>
