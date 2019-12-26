@@ -12,7 +12,7 @@ import {
 export default class Search extends Component {
   state = {
     text: '',
-    cities: []
+    cities: null
   };
 
   fetchCities(text) {
@@ -27,9 +27,14 @@ export default class Search extends Component {
   }
 
   onPress = () => {
-    this.props.navigation.navigate('Home', {
-      citySearch: this.state.text
-    });
+    console.log('city ', this.state.cities);
+    if (this.state.cities === null && this.state.cities.length === 0) {
+      alert('null');
+    } else {
+      this.props.navigation.navigate('Home', {
+        citySearch: this.state.text
+      });
+    }
   };
 
   render() {

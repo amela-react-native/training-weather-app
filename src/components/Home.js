@@ -1,3 +1,5 @@
+/* eslint-disable func-names */
+/* eslint-disable no-unused-vars */
 /* eslint-disable no-return-assign */
 /* eslint-disable react/destructuring-assignment */
 /* eslint-disable class-methods-use-this */
@@ -12,33 +14,17 @@ import {
   Text,
   ImageBackground,
   Dimensions,
-  FlatList
+  FlatList,
+  Alert
 } from 'react-native';
+import ShowDayOfWeek from './showDayOfWeek';
 import moment from 'moment';
-import HorizontalFlatListItem from './flatlist-horizontal';
-import Icon from 'react-native-ionicons';
+import HorizontalFlatListItem from './showWeatherOfDay';
+import ShowDayInfo from './showDayInfo';
+import ShowDetailDay from './showDetailDay';
 
 const {width} = Dimensions.get('window');
 const date = '2019-03-28';
-const horizontalStatus = {
-  rainy: {
-    ios: 'ios-rainy',
-    android: 'md-rainy'
-  }
-};
-const horizontalFlatListData = [
-  {
-    hour: '1 AM',
-    status: horizontalStatus.rainy,
-    degrees: 57
-  },
-  {
-    hour: '2 AM',
-    status: horizontalStatus.rainy,
-    degrees: 57
-  }
-];
-
 export default class Home extends Component {
   state = {
     name: 'loading',
@@ -46,7 +32,13 @@ export default class Home extends Component {
     temp: 'loading',
     descrip: 'loading',
     weather: 'loading',
-    list: null
+    feelsLike: 'loading',
+    pressure: 'loading',
+    tempMin: 'loading',
+    tempMax: 'loading',
+    list: null,
+    listWeek: null,
+    windSpeed: null
   };
 
   getWeatherCity() {
@@ -62,8 +54,15 @@ export default class Home extends Component {
           weather: data2.weather[0].main,
           descrip: data2.weather[0].description,
           tempMax: data2.main.temp_max,
-          tempMin: data2.main.temp_min
+          tempMin: data2.main.temp_min,
+          pressure: data2.main.pressure,
+          humidity: data2.main.humidity,
+          windSpeed: data2.wind.speed,
+          feelsLike: data2.main.feels_like
         });
+      })
+      .catch(function(error) {
+        Alert.alert('ERROR CITY NAME');
       });
   }
 
@@ -75,7 +74,10 @@ export default class Home extends Component {
       .then(data => data.json())
       .then(data2 => {
         this.setState({
-          list: data2.list.filter(item => item.dt_txt.includes(date))
+          list: data2.list.filter(item => item.dt_txt.includes(date)),
+          listWeek: [
+            ...new Set(data2.list.map(item => item.dt_txt.slice(0, 10)))
+          ]
         });
       });
   }
@@ -86,9 +88,23 @@ export default class Home extends Component {
   }
 
   render() {
-    console.log('date: ', moment().format('dddd'));
-    console.log('2010-10-20 04:30:00'.slice(11, 13));
-    // console.log(this.state.list);
+    if (this.state == null) {
+      return <View />;
+    }
+    console.log(this.state.listWeek);
+    console.log(this.state.feelsLike);
+    console.log(this.state);
+    const {
+      humidity,
+      tempMax,
+      tempMin,
+      feelsLike,
+      pressure,
+      windSpeed
+    } = this.state;
+    console.log(moment('2019-03-27').format('dddd'));
+    const entries = Object.entries(this.state);
+    console.log(entries);
     if (this.props.navigation.getParam('citySearch')) {
       this.getWeatherCity();
     }
@@ -121,56 +137,33 @@ export default class Home extends Component {
               </View>
               <FlatList
                 style={styles.scrollViewHorizontal}
+                showsHorizontalScrollIndicator={false}
                 horizontal
-                data={horizontalFlatListData}
+                data={this.state.list}
                 renderItem={({item, index}) => {
-                  return (
-                    <HorizontalFlatListItem
-                      item={item}
-                      index={index}
-                      parentFlatList={this}
-                    />
-                  );
+                  return <HorizontalFlatListItem item={item} index={index} />;
                 }}
-                keyExtractor={item => item.hour}
+                keyExtractor={item => `${item.main.temp}`}
               />
               <View style={styles.viewDayOfWeek}>
-                <View style={styles.viewDay}>
-                  <View style={[styles.viewBetWeen, {paddingLeft: 10}]}>
-                    <Text style={styles.textBetWeen}>Wednesday</Text>
-                  </View>
-                  <View style={styles.viewBetWeen}>
-                    <Icon
-                      name="ios-sunny"
-                      size={25}
-                      style={[
-                        styles.textScrollViewHorizontal,
-                        {paddingLeft: 10}
-                      ]}
-                    />
-                  </View>
-                  <View style={[styles.viewBetWeen, {paddingRight: 10}]}>
-                    <Text style={styles.textBetWeen}>20 28</Text>
-                  </View>
-                </View>
+                <FlatList
+                  showsVerticalScrollIndicator={false}
+                  data={this.state.listWeek}
+                  renderItem={({item, index}) => {
+                    return <ShowDayOfWeek item={item} index={index} />;
+                  }}
+                  keyExtractor={index => `${index}`}
+                />
               </View>
-              <View style={styles.infoDay} />
-              <View style={styles.detailsDay}>
-                <View style={styles.rowDetails}>
-                  <View style={styles.alignLeftText}>
-                    <Text style={styles.textTitle}>detail</Text>
-                    <Text style={styles.value}>20</Text>
-                  </View>
-                  <View style={styles.alignLeftText}>
-                    <Text style={styles.textTitle}>detail</Text>
-                    <Text style={styles.value}>20</Text>
-                  </View>
-                </View>
-                <View style={styles.rowDetails} />
-                <View style={styles.rowDetails} />
-                <View style={styles.rowDetails} />
-                <View style={styles.rowDetails} />
-              </View>
+              <ShowDayInfo />
+              <ShowDetailDay
+                humidity={humidity}
+                feelsLike={feelsLike}
+                tempMax={tempMax}
+                tempMin={tempMin}
+                windSpeed={windSpeed}
+                pressure={pressure}
+              />
             </View>
           </ScrollView>
         </ImageBackground>
@@ -239,32 +232,9 @@ const styles = StyleSheet.create({
   },
   viewDayOfWeek: {
     width,
-    height: 400,
+    height: 250,
     borderBottomColor: 'white',
     borderBottomWidth: 1
-  },
-  infoDay: {
-    width,
-    height: 100,
-    borderBottomColor: 'white',
-    borderBottomWidth: 1
-  },
-  detailsDay: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    width,
-    height: 300,
-    borderBottomColor: 'white',
-    borderBottomWidth: 1
-  },
-  rowDetails: {
-    width: width - 50,
-    height: 60,
-    borderBottomColor: 'white',
-    borderBottomWidth: 1,
-    paddingHorizontal: 10,
-    flexDirection: 'row',
-    justifyContent: 'space-between'
   },
   viewTextCity: {
     width,
@@ -272,54 +242,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: 'transparent'
-  },
-  vtextScrollViewHorizontal: {
-    flexDirection: 'row'
-  },
-  textScrollViewHorizontal: {
-    padding: 10,
-    color: 'white'
-  },
-  viconScrollViewHorizontal: {
-    flexDirection: 'row',
-    marginLeft: 10
-  },
-  textBottomScrollViewHorizontal: {
-    paddingLeft: 15,
-    color: 'white'
-  },
-  viewDay: {
-    flexDirection: 'row',
-    justifyContent: 'space-between'
-  },
-  viewBetWeen: {
-    justifyContent: 'center',
-    alignItems: 'center'
-  },
-  textBetWeen: {
-    color: 'white',
-    fontWeight: 'bold',
-    fontSize: 20
-  },
-  alignLeftText: {
-    flex: 1,
-    justifyContent: 'center'
-  },
-  textTitle: {
-    color: 'white'
-  },
-  value: {
-    color: 'white',
-    fontSize: 20,
-    fontWeight: 'bold'
   }
-});
 
-//
-// <View style={styles.container}>
-//   <Text>name: {this.state.name} </Text>
-//   <Text>temp: {this.state.temp} </Text>
-//   <Text>weather: {this.state.weather} </Text>
-//   <Text>descrip: {this.state.descrip} </Text>
-//   <Text>humidity: {this.state.humidity} </Text>
-// </View>
+});
