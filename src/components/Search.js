@@ -1,18 +1,21 @@
-/* eslint-disable react/state-in-constructor */
-/* eslint-disable react/destructuring-assignment */
 import React, {Component} from 'react';
 import {
   StyleSheet,
   View,
   TextInput,
   TouchableOpacity,
-  Text
+  Text,
+  Alert
 } from 'react-native';
 export default class Search extends Component {
-  state = {
-    text: '',
-    cities: []
-  };
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      text: '',
+      cities: null
+    };
+  }
 
   fetchCities(text) {
     this.setState({text});
@@ -26,20 +29,26 @@ export default class Search extends Component {
   }
 
   onPress = () => {
-    this.props.navigation.navigate('Home', {
-      citySearch: this.state.text
-    });
+    const {cities, text} = this.state;
+    const {navigation} = this.props;
+    if (cities === null && cities.length === 0) {
+      Alert.alert('null');
+    } else {
+      navigation.navigate('Home', {
+        citySearch: text
+      });
+    }
   };
 
   render() {
-    // console.log(this.state.cities);
+    const {text} = this.state;
     return (
       <View style={styles.container}>
         <TextInput
           style={styles.textInput}
-          value={this.state.text}
+          value={text}
           placeholder="Select City"
-          onChangeText={text => this.fetchCities(text)}
+          onChangeText={textInput => this.fetchCities(textInput)}
         />
         <TouchableOpacity style={styles.button} onPress={this.onPress}>
           <Text style={styles.text}> SEARCH </Text>
