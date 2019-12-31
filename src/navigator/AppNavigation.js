@@ -1,4 +1,3 @@
-/* eslint-disable react/react-in-jsx-scope */
 import React from 'react';
 import {createBottomTabNavigator} from 'react-navigation-tabs';
 import Home from '../components/Home';
