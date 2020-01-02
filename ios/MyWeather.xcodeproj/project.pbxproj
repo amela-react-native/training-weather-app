@@ -19,6 +19,7 @@
 		2DCD954D1E0B4F2C00145EB5 /* MyWeatherTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* MyWeatherTests.m */; };
 		7414D221AEADEB016AC6CB0C /* libPods-MyWeather-tvOSTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 044F626A2AB5EE6192E44695 /* libPods-MyWeather-tvOSTests.a */; };
 		BB464551C297D8449CDEAA1C /* libPods-MyWeather.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 93984CC0F92F025FE35A56BD /* libPods-MyWeather.a */; };
+		BE0C6BC523BB5C1E0012DC03 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = BE0C6BC423BB5C1E0012DC03 /* GoogleService-Info.plist */; };
 		DCCCDE12500CC92412A62B0C /* libPods-MyWeatherTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CD350D6BD9262D7872A4163B /* libPods-MyWeatherTests.a */; };
 /* End PBXBuildFile section */
 
@@ -61,6 +62,7 @@
 		A69FBB7196677F6C866643F5 /* Pods-MyWeather-tvOSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MyWeather-tvOSTests.release.xcconfig"; path = "Target Support Files/Pods-MyWeather-tvOSTests/Pods-MyWeather-tvOSTests.release.xcconfig"; sourceTree = "<group>"; };
 		AC01585B30DFF9DA32FC0506 /* Pods-MyWeatherTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MyWeatherTests.debug.xcconfig"; path = "Target Support Files/Pods-MyWeatherTests/Pods-MyWeatherTests.debug.xcconfig"; sourceTree = "<group>"; };
 		B1F9C0C48B879FFF524E785B /* Pods-MyWeather-tvOSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MyWeather-tvOSTests.debug.xcconfig"; path = "Target Support Files/Pods-MyWeather-tvOSTests/Pods-MyWeather-tvOSTests.debug.xcconfig"; sourceTree = "<group>"; };
+		BE0C6BC423BB5C1E0012DC03 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		C63DD7BABE8A456F969D79E2 /* Pods-MyWeather.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MyWeather.debug.xcconfig"; path = "Target Support Files/Pods-MyWeather/Pods-MyWeather.debug.xcconfig"; sourceTree = "<group>"; };
 		CA9A3DA2C935CA8BC01E9F7A /* Pods-MyWeather.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MyWeather.release.xcconfig"; path = "Target Support Files/Pods-MyWeather/Pods-MyWeather.release.xcconfig"; sourceTree = "<group>"; };
 		CD350D6BD9262D7872A4163B /* libPods-MyWeatherTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-MyWeatherTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -130,6 +132,7 @@
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
 				13B07FB61A68108700A75B9A /* Info.plist */,
+				BE0C6BC423BB5C1E0012DC03 /* GoogleService-Info.plist */,
 				13B07FB11A68108700A75B9A /* LaunchScreen.xib */,
 				13B07FB71A68108700A75B9A /* main.m */,
 			);
@@ -339,6 +342,7 @@
 			files = (
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */,
+				BE0C6BC523BB5C1E0012DC03 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
