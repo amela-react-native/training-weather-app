@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "681843944311",
+    "firebase_url": "https://fir-reactnative-3bf8d.firebaseio.com",
+    "project_id": "fir-reactnative-3bf8d",
+    "storage_bucket": "fir-reactnative-3bf8d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:681843944311:android:b6874945b601357dcacf72",
+        "android_client_info": {
+          "package_name": "com.myweather"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "681843944311-v3qr6b4kmg4mbubdpqubur7h188qm74g.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD_REQ8nN3pFfWd-epsP1vWaAvc1p4cm5Q"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "681843944311-v3qr6b4kmg4mbubdpqubur7h188qm74g.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "681843944311-32sm1fres1r7t5qmcovksg4ve2m5pe5m.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "org.reactjs.native.example.MyWeather5"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

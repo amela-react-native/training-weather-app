@@ -7,14 +7,13 @@ import {
   ImageBackground,
   Dimensions,
   FlatList,
-  Alert,
   ActivityIndicator
 } from 'react-native';
-import ShowDayOfWeek from './showDayOfWeek';
+import ShowDayOfWeek from '../components/showDayOfWeek';
 import moment from 'moment';
-import HorizontalFlatListItem from './showWeatherOfDay';
-import ShowDayInfo from './showDayInfo';
-import ShowDetailDay from './showDetailDay';
+import HorizontalFlatListItem from '../components/showWeatherOfDay';
+import ShowDayInfo from '../components/showDayInfo';
+import ShowDetailDay from '../components/showDetailDay';
 
 const {width} = Dimensions.get('window');
 const date = '2019-03-28';
@@ -46,7 +45,6 @@ export default class Home extends Component {
       })
       .catch(error => {
         console.error(error);
-        Alert.alert('ERROR CITY NAME');
       });
   }
 
@@ -73,7 +71,7 @@ export default class Home extends Component {
       this.getWeatherCity();
     }
     const {dataWeather} = this.state;
-    if (dataWeather == null) {
+    if (dataWeather == null || Object.keys(dataWeather).length === 2) {
       return (
         <View style={[styles.container]}>
           <ActivityIndicator size="large" color="#0000ff" />
@@ -81,9 +79,6 @@ export default class Home extends Component {
       );
     }
     const {list, listWeek} = this.state;
-    if (navigation.getParam('citySearch')) {
-      this.getWeatherCity();
-    }
     return (
       <View>
         <ImageBackground
@@ -93,8 +88,9 @@ export default class Home extends Component {
             <Text style={styles.textCity}>{dataWeather.name}</Text>
             <Text style={styles.textMain}>{dataWeather.weather[0].main}</Text>
           </View>
-          <ScrollView>
-            <View style={styles.container}>
+
+          <View style={styles.container}>
+            <ScrollView>
               <View style={styles.viewTop}>
                 <Text style={styles.textTemp}>{dataWeather.main.temp}</Text>
                 <Text style={styles.textCirle}>°</Text>
@@ -140,8 +136,8 @@ export default class Home extends Component {
                 windSpeed={dataWeather.wind.speed}
                 pressure={dataWeather.main.pressure}
               />
-            </View>
-          </ScrollView>
+            </ScrollView>
+          </View>
         </ImageBackground>
       </View>
     );

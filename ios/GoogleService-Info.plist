@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>681843944311-32sm1fres1r7t5qmcovksg4ve2m5pe5m.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.681843944311-32sm1fres1r7t5qmcovksg4ve2m5pe5m</string>
+	<key>API_KEY</key>
+	<string>AIzaSyAdsElTjenGt3Tlvei_1lBR3RjFqLAbRNo</string>
+	<key>GCM_SENDER_ID</key>
+	<string>681843944311</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>org.reactjs.native.example.MyWeather5</string>
+	<key>PROJECT_ID</key>
+	<string>fir-reactnative-3bf8d</string>
+	<key>STORAGE_BUCKET</key>
+	<string>fir-reactnative-3bf8d.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:681843944311:ios:215759ab5724763ccacf72</string>
+	<key>DATABASE_URL</key>
+	<string>https://fir-reactnative-3bf8d.firebaseio.com</string>
+</dict>
+</plist>

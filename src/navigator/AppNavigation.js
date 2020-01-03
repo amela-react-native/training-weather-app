@@ -1,7 +1,7 @@
 import React from 'react';
 import {createBottomTabNavigator} from 'react-navigation-tabs';
-import Home from '../components/Home';
-import Search from '../components/Search';
+import Home from '../screens/Home';
+import Search from '../screens/Search';
 import Icon from 'react-native-ionicons';
 import {createAppContainer} from 'react-navigation';
 
