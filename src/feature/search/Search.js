@@ -7,6 +7,7 @@ import {
   Text,
   Alert
 } from 'react-native';
+import {HOME_ROUTE} from '../../services/navigation/config/routes';
 export default class Search extends Component {
   constructor(props) {
     super(props);
@@ -34,7 +35,7 @@ export default class Search extends Component {
     if (cities === null && cities.length === 0) {
       Alert.alert('null');
     } else {
-      navigation.navigate('Home', {
+      navigation.navigate(HOME_ROUTE.home, {
         citySearch: text
       });
     }

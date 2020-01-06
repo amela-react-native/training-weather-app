@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {Text, StyleSheet, View} from 'react-native';
-import Icon from 'react-native-ionicons';
-import {formatDate} from '../utils/formatNumber';
+import Icon from 'react-native-vector-icons/Ionicons';
+import {formatDate} from '../../../utils/formatNumber';
 
 export default class HorizontalScrollView extends Component {
   render() {
