@@ -60,3 +60,10 @@ buck-out/
 /ios/Pods/
 
 
+
+# CocoaPods
+
+*.lock
+package-lock.json
+/ios/Podfile/
+

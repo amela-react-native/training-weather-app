@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {Text, StyleSheet, View} from 'react-native';
-import Icon from 'react-native-ionicons';
+import Icon from 'react-native-vector-icons/Ionicons';
 import moment from 'moment';
 
 export default class ShowDayOfWeek extends Component {
@@ -8,11 +8,10 @@ export default class ShowDayOfWeek extends Component {
     const {item} = this.props;
     return (
       <View style={styles.viewDay}>
-        <View style={[styles.viewBetWeen, {paddingLeft: 10}]}>
+        <View style={[styles.viewBetWeen, {paddingLeft: 10, flex: 1.5}]}>
           <Text style={styles.textBetWeen}>{moment(item).format('dddd')}</Text>
         </View>
-        <View
-          style={[styles.viewBetWeen, {alignItems: 'center', paddingLeft: 20}]}>
+        <View style={[styles.viewBetWeen, {alignItems: 'center'}]}>
           <Icon
             name="ios-sunny"
             size={25}

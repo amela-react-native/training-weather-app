@@ -9,11 +9,11 @@ import {
   FlatList,
   ActivityIndicator
 } from 'react-native';
-import ShowDayOfWeek from '../components/showDayOfWeek';
+import ShowDayOfWeek from './components/ShowDayOfWeek';
 import moment from 'moment';
-import HorizontalFlatListItem from '../components/showWeatherOfDay';
-import ShowDayInfo from '../components/showDayInfo';
-import ShowDetailDay from '../components/showDetailDay';
+import HorizontalFlatListItem from './components/ShowWeatherOfDay';
+import ShowDayInfo from './components/ShowDayInfo';
+import ShowDetailDay from './components/ShowDetailDay';
 
 const {width} = Dimensions.get('window');
 const date = '2019-03-28';
@@ -22,7 +22,8 @@ export default class Home extends Component {
     super(props);
 
     this.state = {
-      dataWeather: null
+      dataWeather: null,
+      listWeek: null
     };
   }
 
@@ -70,26 +71,28 @@ export default class Home extends Component {
     if (navigation.getParam('citySearch')) {
       this.getWeatherCity();
     }
+    const loading = (
+      <View style={[styles.container]}>
+        <ActivityIndicator size="large" color="#0000ff" />
+      </View>
+    );
     const {dataWeather} = this.state;
     if (dataWeather == null || Object.keys(dataWeather).length === 2) {
-      return (
-        <View style={[styles.container]}>
-          <ActivityIndicator size="large" color="#0000ff" />
-        </View>
-      );
+      return loading;
     }
+
     const {list, listWeek} = this.state;
     return (
       <View>
         <ImageBackground
-          source={require('../assets/bg.png')}
+          source={require('../../assets/bg.png')}
           style={{width: '100%', height: '100%'}}>
           <View style={styles.viewTextCity}>
             <Text style={styles.textCity}>{dataWeather.name}</Text>
             <Text style={styles.textMain}>{dataWeather.weather[0].main}</Text>
           </View>
-
           <View style={styles.container}>
+            <FlatList />
             <ScrollView>
               <View style={styles.viewTop}>
                 <Text style={styles.textTemp}>{dataWeather.main.temp}</Text>
@@ -107,25 +110,27 @@ export default class Home extends Component {
                   </Text>
                 </View>
               </View>
-              <FlatList
-                style={styles.scrollViewHorizontal}
-                showsHorizontalScrollIndicator={false}
-                horizontal
-                data={list}
-                renderItem={({item, index}) => {
-                  return <HorizontalFlatListItem item={item} index={index} />;
-                }}
-                keyExtractor={item => `${item.main.temp}`}
-              />
-              <View style={styles.viewDayOfWeek}>
+              {list ? (
                 <FlatList
-                  showsVerticalScrollIndicator={false}
-                  data={listWeek}
+                  style={styles.scrollViewHorizontal}
+                  showsHorizontalScrollIndicator={false}
+                  horizontal
+                  data={list}
                   renderItem={({item, index}) => {
-                    return <ShowDayOfWeek item={item} index={index} />;
+                    return <HorizontalFlatListItem item={item} index={index} />;
                   }}
-                  keyExtractor={index => `${index}`}
+                  keyExtractor={item => `${item.main.temp}`}
                 />
+              ) : (
+                loading
+              )}
+
+              <View style={styles.viewDayOfWeek}>
+                {listWeek
+                  ? listWeek.map(item => {
+                      return <ShowDayOfWeek item={item} key={item} />;
+                    })
+                  : loading}
               </View>
               <ShowDayInfo />
               <ShowDetailDay
