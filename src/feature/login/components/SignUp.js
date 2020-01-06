@@ -1,6 +1,8 @@
 import React from 'react';
 import {StyleSheet, Text, TextInput, View, Button} from 'react-native';
 import auth from '@react-native-firebase/auth';
+import {LOGIN_ROUTE} from '../../../services/navigation/config/routes';
+
 export default class SignUp extends React.Component {
   constructor(props) {
     super(props);
@@ -12,7 +14,7 @@ export default class SignUp extends React.Component {
     const {navigation} = this.props;
     auth()
       .createUserWithEmailAndPassword(email, password)
-      .then(() => navigation.navigate('Login'))
+      .then(() => navigation.navigate(LOGIN_ROUTE.login))
       .catch(error => this.setState({errorMessage: error.message}));
   };
 
@@ -43,7 +45,7 @@ export default class SignUp extends React.Component {
         <Button title="Sign Up" onPress={this.handleSignUp} />
         <Button
           title="Already have an account? Login"
-          onPress={() => navigation.navigate('Login')}
+          onPress={() => navigation.navigate(LOGIN_ROUTE.login)}
         />
       </View>
     );
