@@ -67,4 +67,5 @@ buck-out/
 package-lock.json
 /ios/Podfile/
 /ios/Podfile.lock
+.vscode/launch.json
 
