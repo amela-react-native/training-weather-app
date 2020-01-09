@@ -53,7 +53,7 @@ const SwitchNavigator = createSwitchNavigator(
     [APP_ROUTE.homeRoute]: Main
   },
   {
-    initialRouteName: LOGIN_ROUTE.signup
+    initialRouteName: LOGIN_ROUTE.login
   }
 );
 const App = createAppContainer(SwitchNavigator);
