@@ -21,8 +21,7 @@ export default class mapView extends Component {
     };
   }
 
-  async componentDidMount() {
-    console.log('didMuount');
+  componentDidMount() {
     this.onPushInfo();
     this.watchIDUser();
     AppState.addEventListener('change', this._handleAppStateChange);
@@ -35,14 +34,12 @@ export default class mapView extends Component {
   }
 
   deleteData = () => {
-    console.log('DELETE');
     const {uid} = auth().currentUser;
     const ref = database().ref(`User/${uid}`);
     ref.remove();
   };
 
   _handleAppStateChange = nextAppState => {
-    console.log('HANDLECHANGE');
     const {appState} = this.state;
     if (appState.match(/inactive|background/) && nextAppState === 'active') {
       console.log('App has come to the foreground!==');
@@ -54,7 +51,6 @@ export default class mapView extends Component {
   };
 
   getMapRegion() {
-    console.log('GETMAP');
     const {latitude, longitude} = this.state;
     return {
       latitude,
@@ -81,8 +77,6 @@ export default class mapView extends Component {
             );
           }
         } else {
-          console.log('WATCHID');
-
           coordinate.timing(newCoordinate).start();
         }
         if (appState === 'inactive' || appState === 'background') {
@@ -119,7 +113,6 @@ export default class mapView extends Component {
   }
 
   async onPushInfo() {
-    console.log('PUSHINFO');
     Geolocation.getCurrentPosition(
       position => {
         this.setState(
@@ -152,7 +145,6 @@ export default class mapView extends Component {
     const snapshot = await ref.once('value');
     const result = snapshot.val();
     this.setState({result: Object.values(result)});
-    console.log('getList2');
   }
 
   render() {
