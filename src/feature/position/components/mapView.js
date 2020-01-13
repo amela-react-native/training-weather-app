@@ -21,7 +21,7 @@ export default class mapView extends Component {
     };
   }
 
-  async componentDidMount() {
+  componentDidMount() {
     this.onPushInfo();
     this.watchIDUser();
     AppState.addEventListener('change', this._handleAppStateChange);
