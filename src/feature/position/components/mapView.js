@@ -21,11 +21,10 @@ export default class mapView extends Component {
     };
   }
 
-  componentDidMount() {
+  async componentDidMount() {
     this.onPushInfo();
     this.watchIDUser();
     AppState.addEventListener('change', this._handleAppStateChange);
-    console.log('APPSTATE : ', AppState.currentState);
   }
 
   componentWillUnmount() {
@@ -43,9 +42,15 @@ export default class mapView extends Component {
     const {appState} = this.state;
     if (appState.match(/inactive|background/) && nextAppState === 'active') {
       console.log('App has come to the foreground!==');
-    } else if (nextAppState === 'inactive' || nextAppState === 'background') {
+      this.watchIDUser();
+    } else if (
+      nextAppState.match(/inactive|background/) &&
+      appState === 'active'
+    ) {
       console.log('App has come to the back ground!==');
       this.deleteData();
+      Geolocation.clearWatch(this.watchID);
+      Geolocation.stopObserving();
     }
     this.setState({appState: nextAppState});
   };
@@ -63,7 +68,7 @@ export default class mapView extends Component {
   async watchIDUser() {
     this.watchID = Geolocation.watchPosition(
       position => {
-        const {coordinate, routeCoordinates, appState} = this.state;
+        const {coordinate, routeCoordinates} = this.state;
         const {latitude, longitude} = position.coords;
         const newCoordinate = {
           latitude,
@@ -79,27 +84,23 @@ export default class mapView extends Component {
         } else {
           coordinate.timing(newCoordinate).start();
         }
-        if (appState === 'inactive' || appState === 'background') {
-          this.deleteData();
-        } else {
-          this.setState(
-            {
+        this.setState(
+          {
+            latitude,
+            longitude,
+            routeCoordinates: routeCoordinates.concat([newCoordinate])
+          },
+          () => {
+            const {uid, email} = auth().currentUser;
+            const ref = database().ref(`User/${uid}`);
+            ref.set({
+              uid,
+              email,
               latitude,
-              longitude,
-              routeCoordinates: routeCoordinates.concat([newCoordinate])
-            },
-            () => {
-              const {uid, email} = auth().currentUser;
-              const ref = database().ref(`User/${uid}`);
-              ref.set({
-                uid,
-                email,
-                latitude,
-                longitude
-              });
-            }
-          );
-        }
+              longitude
+            });
+          }
+        );
       },
       error => console.log(error),
       {
@@ -149,15 +150,11 @@ export default class mapView extends Component {
 
   render() {
     const {arr, result, appState} = this.state;
-    console.log(appState);
     if (appState === 'active') this.onGetListInfo();
     if (arr && result) {
       return (
         <View style={styles.container}>
-          <MapView
-            style={styles.map}
-            region={this.getMapRegion()}
-            showsUserLocation>
+          <MapView style={styles.map} region={this.getMapRegion()}>
             {result &&
               result.map(marker => (
                 <MapView.Marker
